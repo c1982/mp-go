@@ -1,20 +1,14 @@
-package main
+package api
 
 import (
 	"encoding/json"
 	"fmt"
 )
 
-func GetWhoami() (result Whoami, err error) {
-	var apiRes Whoami
-	req, err := WebRequest("GET", "User/Whoami", nil)
-
-	err = json.Unmarshal(req, &apiRes)
-
-	return apiRes, err
+type Domain struct {
 }
 
-func CretaeDomain(name string, planAlias string, username string,
+func (o *Domain) CretaeDomain(name string, planAlias string, username string,
 	password string, activedomainuser bool, firstname string,
 	lastname string, email string, expiration string) (result DomainResult, err error) {
 
@@ -30,7 +24,7 @@ func CretaeDomain(name string, planAlias string, username string,
 		"email":            email,
 		"expiration":       expiration}
 
-	req, err := WebRequest("POST", "Domain/Create", params)
+	req, err := webRequest("POST", "Domain/Create", params)
 
 	err = json.Unmarshal(req, &apRes)
 

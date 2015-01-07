@@ -1,4 +1,4 @@
-package main
+package api
 
 import (
 	"fmt"
@@ -9,27 +9,27 @@ import (
 	"strings"
 )
 
-func WebRequest(method string, command string, params map[string]string) (result []byte, err error) {
+func webRequest(method string, command string, params map[string]string) (result []byte, err error) {
 
 	var reader io.Reader
 	var hc http.Client
 
-	conf, err := GetConfig()
+	conf, err := getConfig()
 
 	if err != nil {
 		return nil, err
 	}
 
 	uri := fmt.Sprintf("%s://%s:%d/Api/v1/%s?key=%s&format=JSON",
-		GetProtocol(conf.Https), conf.Host, conf.Port, command, conf.Key)
+		getProtocol(conf.Https), conf.Host, conf.Port, command, conf.Key)
 
 	if strings.ToLower(method) == "get" {
 		if params != nil {
-			uri += JoinStringMapForUri(params)
+			uri += joinStringMapForUri(params)
 		}
 	} else {
 		if params != nil {
-			readerData := JoinStringMapForUri(params)
+			readerData := joinStringMapForUri(params)
 			reader = strings.NewReader(readerData)
 		}
 	}
@@ -63,7 +63,7 @@ func WebRequest(method string, command string, params map[string]string) (result
 	return body, err
 }
 
-func GetProtocol(isHttps bool) string {
+func getProtocol(isHttps bool) string {
 	if isHttps {
 		return "https"
 	} else {
@@ -71,7 +71,7 @@ func GetProtocol(isHttps bool) string {
 	}
 }
 
-func JoinStringMapForUri(params map[string]string) string {
+func joinStringMapForUri(params map[string]string) string {
 	var concat string
 
 	for key, value := range params {

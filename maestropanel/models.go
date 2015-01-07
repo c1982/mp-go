@@ -1,4 +1,4 @@
-package main
+package api
 
 type Whoami struct {
 	StatusCode int           `json:"StatusCode,omitempty"`

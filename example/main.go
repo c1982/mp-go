@@ -1,13 +1,15 @@
-// mp-api project main.go
 package main
 
 import (
 	"fmt"
+	"mp-go/maestropanel"
 )
 
 func main() {
 
-	whoami, err := GetWhoami()
+	_user := api.User{}
+
+	whoami, err := _user.GetWhoami()
 
 	fmt.Println("Error: ", err)
 	fmt.Println("ErrorCode: ", whoami.ErrorCode)
